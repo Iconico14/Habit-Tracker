@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Habit Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: #FFFAF0;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-family: 'Pacifico', cursive;
+            color: #FF69B4;
+            margin: 20px 0;
+        }
+        .container {
+            padding: 30px;
+        }
+        .btn {
+            display: inline-block;
+            background: #FFB6C1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            color: #FFF;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            font-family: 'Pacifico', cursive;
+        }
+        .btn:hover {
+            background: #FF6F61;
+        }
+        .quote {
+            margin: 20px auto;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            font-style: italic;
+            color: #333;
+            font-family: 'Pacifico', cursive;
+            width: 80%;
+            max-width: 600px;
+        }
+        .checkbox-container {
+            text-align: left;
+            display: inline-block;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            margin-top: 20px;
+            width: 70%;
+            max-width: 800px;
+            overflow-y: auto;
+        }
+        .checkbox-container h3 {
+            color: #FF69B4;
+            margin-bottom: 15px;
+        }
+        .checkbox-container label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+            color: #6B5B95;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .checkbox-container input[type="checkbox"] {
+            transform: scale(1.5);
+            margin-right: 10px;
+        }
+        .activities ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .activities li {
+            margin: 10px 0;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 18px;
+            color: #6B5B95;
+        }
+        .activities li::before {
+            content: "✨ ";
+            color: #FF69B4;
+        }
+        .input-box {
+            margin: 20px auto;
+            max-width: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 5px;
+            border: none;
+            outline: none;
+            font-size: 18px;
+        }
+        .back-btn {
+            display: inline-block;
+            background: #FF6F61;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #FFF;
+            text-decoration: none;
+            margin-top: 20px;
+            font-family: 'Pacifico', cursive;
+        }
+        .back-btn:hover {
+            background: #FFB6C1;
+        }
+        .save-btn {
+            display: inline-block;
+            background: #7B68EE;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #FFF;
+            text-decoration: none;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .save-btn:hover {
+            background: #6A5ACD;
+        }
+        .activity-box {
+            background: #FFF1F3;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .activity-title {
+            font-family: 'Pacifico', cursive;
+            color: #FF69B4;
+            font-size: 24px;
+        }
+        .flower-box {
+            background: linear-gradient(to bottom right, #FFB6C1, #FF69B4);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: #FFF;
+            font-family: 'Pacifico', cursive;
+        }
+        .flower-box span {
+            font-size: 30px;
+        }
+        .emoji-box {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Habit Tracker</h1>
+
+        <!-- Welcome Page -->
+        <div class="flower-box">
+            <span>🌸✨ Welcome to Your Habit Tracker! ✨🌸</span>
+        </div>
+
+        <!-- Name Input Section -->
+        <div class="input-box">
+            <input type="text" id="userName" placeholder="Enter your name" oninput="updateName()">
+        </div>
+        <p id="greeting"></p>
+
+        <!-- Start Button -->
+        <button class="btn" onclick="navigateTo('menuPage')">Start</button>
+
+        <!-- Menu Page -->
+        <div id="menuPage" class="container page">
+            <h2>Choose an Activity 🌸</h2>
+            <div class="emoji-box">
+                🧘📚🌿📖🍎⚡💪🙏🏥
+            </div>
+            <button class="btn" onclick="showChecklist('selfCare')">Self Care 🧘</button>
+            <button class="btn" onclick="showChecklist('school')">School 📚</button>
+            <button class="btn" onclick="showChecklist('skincare')">Skincare 🌿</button>
+            <button class="btn" onclick="showChecklist('bookList')">Book List 📖</button>
+            <button class="btn" onclick="showChecklist('diet')">Diet 🍎</button>
+            <button class="btn" onclick="showChecklist('productivity')">Productivity ⚡</button>
+            <button class="btn" onclick="showChecklist('healthCare')">Health Care 🏥</button>
+            <button class="btn" onclick="showChecklist('gratitude')">Gratitude 🙏</button>
+        </div>
+
+        <!-- Checklists -->
+        <div id="selfCare" class="activity-box page">
+            <h3 class="activity-title">Self Care Checklist</h3>
+            <div class="quote">"Self-care is giving the world the best of you, instead of what's left of you."</div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> Take a bubble bath</label>
+                <label><input type="checkbox"> Do yoga or meditate</label>
+                <label><input type="checkbox"> Get 8 hours of sleep</label>
+                <label><input type="checkbox"> Take a walk in nature</label>
+                <label><input type="checkbox"> Read a book for relaxation</label>
+                <label><input type="checkbox"> Listen to calming music</label>
+                <label><input type="checkbox"> Journal your thoughts</label>
+                <label><input type="checkbox"> Treat yourself to a spa day</label>
+                <label><input type="checkbox"> Practice positive affirmations</label>
+                <label><input type="checkbox"> Watch a favorite show</label>
+            </div>
+            <button class="save-btn" onclick="saveChecklist('selfCare')">Save</button>
+        </div>
+
+        <!-- School Checklist -->
+        <div id="school" class="activity-box page">
+            <h3 class="activity-title">School Checklist</h3>
+            <div class="quote">"Education is the most powerful weapon you can use to change the world."</div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> Attend all classes</label>
+                <label><input type="checkbox"> Complete assignments on time</label>
+                <label><input type="checkbox"> Revise notes after each class</label>
+                <label><input type="checkbox"> Participate in group discussions</label>
+                <label><input type="checkbox"> Study for exams every week</label>
+                <label><input type="checkbox"> Organize study material</label>
+                <label><input type="checkbox"> Set weekly study goals</label>
+                <label><input type="checkbox"> Join a study group</label>
+                <label><input type="checkbox"> Take regular breaks</label>
+                <label><input type="checkbox"> Review previous semester topics</label>
+            </div>
+            <button class="save-btn" onclick="saveChecklist('school')">Save</button>
+        </div>
+
+        <!-- Skincare Checklist -->
+        <div id="skincare" class="activity-box page">
+            <h3 class="activity-title">Skincare Checklist</h3>
+            <div class="quote">"Taking care of your skin is more important than makeup."</div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> Cleanse your face twice a day</label>
+                <label><input type="checkbox"> Apply sunscreen every morning</label>
+                <label><input type="checkbox"> Exfoliate once a week</label>
+                <label><input type="checkbox"> Use a hydrating toner</label>
+                <label><input type="checkbox"> Moisturize daily</label>
+                <label><input type="checkbox"> Use eye cream if needed</label>
+                <label><input type="checkbox"> Drink plenty of water</label>
+                <label><input type="checkbox"> Do a face mask once a week</label>
+                <label><input type="checkbox"> Remove makeup before bed</label>
+                <label><input type="checkbox"> Check skin for changes regularly</label>
+            </div>
+            <button class="save-btn" onclick="saveChecklist('skincare')">Save</button>
+        </div>
+
+        <!-- Book List -->
+        <div id="bookList" class="activity-box page">
+            <h3 class="activity-title">Book List Checklist</h3>
+            <div class="quote">"A room without books is like a body without a soul."</div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> Read for 30 minutes every day</label>
+                <label><input type="checkbox"> Join a book club</label>
+                <label><input type="checkbox"> Set a monthly reading goal</label>
+                <label><input type="checkbox"> Explore new genres</label>
+                <label><input type="checkbox"> Write book reviews</label>
+                <label><input type="checkbox"> Share book recommendations</label>
+                <label><input type="checkbox"> Create a reading list</label>
+                <label><input type="checkbox"> Re-read your favorite books</label>
+                <label><input type="checkbox"> Read books by diverse authors</label>
+                <label><input type="checkbox"> Challenge yourself to read more</label>
+            </div>
+            <button class="save-btn" onclick="saveChecklist('bookList')">Save</button>
+        </div>
+
+        <!-- Diet Checklist -->
+        <div id="diet" class="activity-box page">
+            <h3 class="activity-title">Diet Checklist</h3>
+            <div class="quote">"Eat healthy, stay fit!"</div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> Eat more vegetables</label>
+                <label><input type="checkbox"> Drink plenty of water</label>
+                <label><input type="checkbox"> Avoid sugary snacks</label>
+                <label><input type="checkbox"> Eat balanced meals</label>
+                <label><input type="checkbox"> Limit fast food intake</label>
+                <label><input type="checkbox"> Choose whole grains</label>
+                <label><input type="checkbox"> Eat lean proteins</label>
+                <label><input type="checkbox"> Snack on fruits and nuts</label>
+                <label><input type="checkbox"> Eat smaller meals more often</label>
+                <label><input type="checkbox"> Avoid processed foods</label>
+            </div>
+            <button class="save-btn" onclick="saveChecklist('diet')">Save</button>
+        </div>
+
+        <!-- Productivity Checklist -->
+        <div id="productivity" class="activity-box page">
+            <h3 class="activity-title">Productivity Checklist</h3>
+            <div class="quote">"The key to success is to focus on goals, not obstacles."</div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> Create a daily to-do list</label>
+                <label><input type="checkbox"> Set weekly goals</label>
+                <label><input type="checkbox"> Avoid procrastination</label>
+                <label><input type="checkbox"> Organize your workspace</label>
+                <label><input type="checkbox"> Prioritize tasks</label>
+                <label><input type="checkbox"> Stay focused for set periods</label>
+                <label><input type="checkbox"> Break tasks into smaller steps</label>
+                <label><input type="checkbox"> Take short breaks</label>
+                <label><input type="checkbox"> Set a productivity timer</label>
+                <label><input type="checkbox"> Celebrate your progress</label>
+            </div>
+            <button class="save-btn" onclick="saveChecklist('productivity')">Save</button>
+        </div>
+
+        <!-- Health Care Checklist -->
+        <div id="healthCare" class="activity-box page">
+            <h3 class="activity-title">Health Care Checklist</h3>
+            <div class="quote">"Health is wealth!"</div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> Exercise for 30 minutes</label>
+                <label><input type="checkbox"> Eat a balanced diet</label>
+                <label><input type="checkbox"> Get regular health checkups</label>
+                <label><input type="checkbox"> Take vitamins if needed</label>
+                <label><input type="checkbox"> Get enough sleep</label>
+                <label><input type="checkbox"> Practice good hygiene</label>
+                <label><input type="checkbox"> Manage stress</label>
+                <label><input type="checkbox"> Drink plenty of water</label>
+                <label><input type="checkbox"> Avoid smoking</label>
+                <label><input type="checkbox"> Stay active throughout the day</label>
+            </div>
+            <button class="save-btn" onclick="saveChecklist('healthCare')">Save</button>
+        </div>
+
+        <!-- Gratitude Checklist -->
+        <div id="gratitude" class="activity-box page">
+            <h3 class="activity-title">Gratitude Checklist</h3>
+            <div class="quote">"Gratitude turns what we have into enough."</div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> Write down 3 things you're grateful for</label>
+                <label><input type="checkbox"> Compliment someone today</label>
+                <label><input type="checkbox"> Be thankful for small moments</label>
+                <label><input type="checkbox"> Express gratitude towards family</label>
+                <label><input type="checkbox"> Appreciate nature</label>
+                <label><input type="checkbox"> Volunteer to help others</label>
+                <label><input type="checkbox"> Meditate on things you're thankful for</label>
+                <label><input type="checkbox"> Share your gratitude on social media</label>
+                <label><input type="checkbox"> Reflect on your past achievements</label>
+                <label><input type="checkbox"> Practice gratitude before bed</label>
+            </div>
+            <button class="save-btn" onclick="saveChecklist('gratitude')">Save</button>
+        </div>
+    </div>
+
+    <script>
+        function navigateTo(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+        }
+
+        function showChecklist(checklist) {
+            navigateTo(checklist);
+        }
+
+        function updateName() {
+            var name = document.getElementById("userName").value;
+            document.getElementById("greeting").innerHTML = name ? "Hello, " + name + "!" : "";
+        }
+
+        function saveChecklist(checklist) {
+            alert(checklist + " checklist saved!");
+            navigateTo("menuPage");
+        }
+    </script>
+</body>
+</html>
